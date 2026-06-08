@@ -1,3 +1,4 @@
+import React from 'react';
 import { TOOLS } from '@/data';
 import { ToolCard } from '@/components/ToolCard';
 

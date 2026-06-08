@@ -1,3 +1,4 @@
+import React from 'react';
 import { ToolItem } from '@/types';
 import { Heart, Calculator, Droplets, Activity, Leaf, Layers, Zap, TrendingUp } from 'lucide-react';
 import { cn } from '@/utils';

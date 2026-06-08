@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header } from '@/components/Header';
 import { Sidebar } from '@/components/Sidebar';
 import { Footer } from '@/components/Footer';
@@ -12,6 +12,18 @@ import { ProfitView } from '@/views/ProfitView';
 import { CompareView } from '@/views/CompareView';
 import { FavoritesView } from '@/views/FavoritesView';
 import { AboutView, LegalView } from '@/views/SharedViews';
+
+const VIEW_TITLES: Record<string, string> = {
+  home: 'Dashboard | Hydroponic Planning Hub',
+  estimate: 'Cost Estimator | Hydroponic',
+  nutrients: 'Nutrient Calculator | Hydroponic',
+  ecph: 'EC / pH Planner | Hydroponic',
+  profit: 'Profit & ROI | Hydroponic',
+  compare: 'System Comparison | Hydroponic',
+  favorites: 'Saved Tools | Hydroponic',
+  about: 'About | Hydroponic Planning Hub',
+  legal: 'Legal & Disclaimers | Hydroponic'
+};
 
 export default function App() {
   const [currentView, setCurrentView] = useState<string>('home');
@@ -29,6 +41,11 @@ export default function App() {
       }
     }
   }, []);
+
+  // Update document title for SEO
+  useEffect(() => {
+    document.title = VIEW_TITLES[currentView] || 'Hydroponic Planning Hub';
+  }, [currentView]);
 
   const toggleFavorite = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -88,7 +105,7 @@ export default function App() {
 
         {/* Sidebar */}
         <div className={`
-          fixed inset-y-0 left-0 z-50 transform w-64 bg-slate-50 border-r border-slate-200 transition-transform duration-200 ease-in-out
+          fixed inset-y-0 left-0 z-50 transform w-64 bg-[#F4F5F2] shadow-xl md:shadow-none transition-transform duration-200 ease-in-out
           md:relative md:translate-x-0
           ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
         `}>
