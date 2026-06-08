@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+
 export function AboutView() {
   return (
     <div className="max-w-3xl mx-auto space-y-6">
@@ -53,6 +55,67 @@ export function LegalView() {
         <p>
           Information provided here does not constitute, nor replace, professional agronomy, engineering, legal, or financial advice. Users should verify all important agricultural business decisions independently with local extension agents, certified agronomists, or specialized financial advisors.
         </p>
+      </div>
+    </div>
+  );
+}
+
+export function ContactView() {
+  const [status, setStatus] = useState<string>('');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('Message sent successfully. We will be in touch soon.');
+    if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
+      (window as any).gtag('event', 'generate_lead', {
+        event_category: 'contact',
+        event_label: 'contact_form_submit'
+      });
+    }
+  };
+
+  return (
+    <div className="max-w-3xl mx-auto space-y-6">
+      <div className="bg-white rounded-lg border border-slate-200 p-5 shadow-sm">
+        <h2 className="text-2xl font-bold text-slate-900">Contact Us</h2>
+        <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mt-1">Reach Out to Rural Utility Cost</p>
+      </div>
+
+      <div className="bg-white rounded-lg border border-slate-200 p-6 shadow-sm">
+        {status ? (
+          <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 p-4 rounded text-sm font-medium">
+            {status}
+          </div>
+        ) : (
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="name" className="text-[10px] uppercase font-bold text-slate-500 mb-1 block">Full Name</label>
+                <input id="name" type="text" required className="w-full text-sm border-slate-200 rounded border bg-slate-50 p-3 font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="John Doe" />
+              </div>
+              <div>
+                <label htmlFor="email" className="text-[10px] uppercase font-bold text-slate-500 mb-1 block">Email Address</label>
+                <input id="email" type="email" required className="w-full text-sm border-slate-200 rounded border bg-slate-50 p-3 font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="john@example.com" />
+              </div>
+            </div>
+            <div>
+              <label htmlFor="subject" className="text-[10px] uppercase font-bold text-slate-500 mb-1 block">Subject</label>
+              <select id="subject" required className="w-full text-sm border-slate-200 rounded border bg-slate-50 p-3 font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <option value="">Select a topic...</option>
+                <option value="support">Technical Support</option>
+                <option value="feedback">Tool Feedback</option>
+                <option value="business">Business Inquiry</option>
+              </select>
+            </div>
+            <div>
+              <label htmlFor="message" className="text-[10px] uppercase font-bold text-slate-500 mb-1 block">Message</label>
+              <textarea id="message" required rows={4} className="w-full text-sm border-slate-200 rounded border bg-slate-50 p-3 font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="How can we help?"></textarea>
+            </div>
+            <button type="submit" className="w-full bg-slate-900 hover:bg-black text-white font-bold py-3 px-6 rounded min-h-[48px] shadow-sm uppercase tracking-wider text-xs transition-colors">
+              Send Message
+            </button>
+          </form>
+        )}
       </div>
     </div>
   );
